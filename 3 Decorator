@@ -1,0 +1,31 @@
+import time
+
+
+def pow(*args):
+    total = args[0]
+    iter_nums = iter(args)
+    next(iter_nums)
+    for x in iter_nums:
+        total = total ** int(x)
+    return total
+
+
+def args_taker_deco(*args):
+
+    def reps_taker(reps):
+
+        def wrapper(func):
+            print(func.__name__, ' - is the name of main logic function')
+            t1 = time.time()
+            res = [func(*args) for x in range(reps)]
+            t2 = time.time()
+            # t3 = (t2 - t1)
+            # print(t3, 'execution time in seconds')
+            return t2 - t1, res
+
+        return wrapper
+
+    return reps_taker
+
+
+print(args_taker_deco(222, 222, 222)(3)(pow))
